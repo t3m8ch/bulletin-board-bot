@@ -1,7 +1,7 @@
-Aiogram template
-================
+Bulletin Board Bot
+==================
 
-Template for creating Python telegram bots using the Aiogram library. 🐍
+Bulletin board written in Python using the Aiogram library 🐍
 
 🏃 How do I run it?
 ----------------
@@ -9,8 +9,8 @@ Template for creating Python telegram bots using the Aiogram library. 🐍
 
     ::
 
-        git clone https://github.com/t3m8ch/aiogram-template.git
-        cd aiogram-template
+        git clone https://github.com/t3m8ch/bulletin-board-bot.git
+        cd bulletin-board-bot
 
 #. Rename **.example.env** to **.env** 🔄
 
