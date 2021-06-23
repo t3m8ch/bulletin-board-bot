@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "aiogram-template"
+name = "bulletin-board-bot"
 version = "0.1.0"
 description = ""
 authors = ["Kudyakov Artem <t3m8ch@yandex.ru>"]
@@ -15,7 +15,7 @@ pytest = "^6.2.4"
 ipython = "^7.24.1"
 
 [tool.poetry.scripts]
-bot = "aiogram_template.main:run"
+bot = "bulletin_board_bot.main:run"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -4,7 +4,7 @@ from typing import List, NamedTuple, Union, Optional
 
 from urlpath import URL
 
-from aiogram_template.errors import PortMustBeNumberError
+from bulletin_board_bot.errors import PortMustBeNumberError
 
 
 # Edit this

@@ -1,4 +1,4 @@
-from aiogram_template import __version__
+from bulletin_board_bot import __version__
 
 
 def test_version():

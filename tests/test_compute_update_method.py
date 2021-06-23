@@ -1,6 +1,6 @@
-from aiogram_template.errors import PortMustBeNumberError
+from bulletin_board_bot.errors import PortMustBeNumberError
 
-from aiogram_template.config import _compute_update_method, \
+from bulletin_board_bot.config import _compute_update_method, \
     LongPollingUpdateMethod, WebhookUpdateMethod
 
 

@@ -1,4 +1,4 @@
-from aiogram_template.handlers import common
+from bulletin_board_bot.handlers import common
 
 
 def register_handlers(dp):

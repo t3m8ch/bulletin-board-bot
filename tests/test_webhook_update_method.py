@@ -1,4 +1,4 @@
-from aiogram_template.config import WebhookUpdateMethod
+from bulletin_board_bot.config import WebhookUpdateMethod
 
 
 def test_url_property_if_host_is_https_1():

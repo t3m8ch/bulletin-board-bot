@@ -6,11 +6,11 @@ from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
 
-from aiogram_template.config import LongPollingUpdateMethod, \
+from bulletin_board_bot.config import LongPollingUpdateMethod, \
     WebhookUpdateMethod, Config
 
-from aiogram_template.handlers import register_handlers
-from aiogram_template import config
+from bulletin_board_bot.handlers import register_handlers
+from bulletin_board_bot import config
 
 
 def on_startup(cfg: Config):
