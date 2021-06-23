@@ -1,7 +1,43 @@
-Aiogram template
-================
+Bulletin Board Bot
+==================
 
-Template for creating Python telegram bots using the Aiogram library. 🐍
+Bulletin board written in Python using the Aiogram library 🐍
+
+Technical requirements
+----------------------
+
+#. At the command **/start** bot sends a welcome message with basic commands, 
+   including **/help** to see a complete list of commands. 
+
+#. The bot has a command **/browseAds**, which sends messages with inline browse 
+   buttons with which the user switches between ads.
+
+#. Between the browse buttons in the middle there is a button to add the current 
+   ad to favorites.
+
+#. Ads may or may not contain photos.
+
+#. The bot has a command **/newAd**, which allows you to add a new ad.
+
+#. After running this command the bot sends a new message that requests you 
+   to write a text of an ad and attach pictures if it is needed; the user 
+   needs to send the message created by user.
+
+#. The message sent by the bot contains an inline button to cancel adding an ad.
+
+#. The bot has a command **/myAds**, which shows ads added by the user, 
+   similar to how the command **/browseAds** shows them, but in addition to those 
+   buttons is added a button to edit and delete the current ad.
+
+#. When you click on the delete button, the bot will ask you to confirm this 
+   operation using the inline button of message, which contains the front of the ad.
+   
+#. When you click on the edit button, the bot will ask you to send a message with 
+   new text; then the bot will send pictures attached to the old ad, depending on whether 
+   you want to change the pictures, you should click on the corresponding inline button; 
+   if you decide to change the pictures, the bot will ask you to send new; after all operations, 
+   the ad is edited; editing can be canceled at any stage.
+   
 
 🏃 How do I run it?
 ----------------
@@ -9,8 +45,8 @@ Template for creating Python telegram bots using the Aiogram library. 🐍
 
     ::
 
-        git clone https://github.com/t3m8ch/aiogram-template.git
-        cd aiogram-template
+        git clone https://github.com/t3m8ch/bulletin-board-bot.git
+        cd bulletin-board-bot
 
 #. Rename **.example.env** to **.env** 🔄
 
