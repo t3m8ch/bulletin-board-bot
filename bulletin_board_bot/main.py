@@ -52,9 +52,10 @@ def run():
         parse_mode=cfg.tg.parse_mode
     )
     dp = Dispatcher(bot, storage=storage)
+    user_data = {}
 
     # Register
-    register_handlers(dp)
+    register_handlers(dp, user_data)
 
     # Start bot!
     if type(cfg.tg.update_method) == LongPollingUpdateMethod:
