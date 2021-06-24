@@ -19,7 +19,7 @@ def register_handlers(dp: Dispatcher, user_data: dict):
     Remember that the order of handlers is important!
     """
     handlers = \
-        ad_browser.get_handlers(user_data) + \
+        ad_browser.handlers + \
         common.handlers
 
     for handler in handlers:

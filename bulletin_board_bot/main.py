@@ -11,6 +11,7 @@ from bulletin_board_bot.config import LongPollingUpdateMethod, \
 
 from bulletin_board_bot.handlers import register_handlers
 from bulletin_board_bot import config
+from bulletin_board_bot.middlewares import setup_middlewares
 
 
 def on_startup(cfg: Config):
@@ -53,6 +54,7 @@ def run():
     )
     dp = Dispatcher(bot, storage=storage)
     user_data = {}
+    setup_middlewares(dp, user_data)
 
     # Register
     register_handlers(dp, user_data)
