@@ -4,13 +4,6 @@ from bulletin_board_bot.services.ad_service import FakeAdService
 
 from bulletin_board_bot.keyboards import ad_browser_keyboard, ad_browser_cd
 
-ads = [
-    "Ad1",
-    "Ad2",
-    "Ad3",
-    "Ad4"
-]
-
 
 def register_cmd_browse_ads(dp: Dispatcher):
     dp.register_message_handler(cmd_browse_ads, Command("browseAds"))
