@@ -64,6 +64,7 @@ Technical requirements
         WEBHOOK_PATH=Insert/the/path/to/bot/that/will/be/accessed/by/Telegram
         WEBAPP_HOST=Insert.web.application.host
         WEBAPP_PORT=Insert_web_application_port
+        LOG_LEVEL=info
 
     To use webhook, you only need to specify the environment variable **WEBHOOK_HOST**.
     If this parameter is not specified, long polling is used. If you specify only
@@ -74,6 +75,15 @@ Technical requirements
         WEBHOOK_PATH=/bot
         WEBAPP_HOST=localhost
         WEBAPP_PORT=3000
+
+    The LOG_LEVEL parameter is also optional. By default it is **INFO**.
+    Valid* values: **DEBUG**, **INFO**, **WARNING**, **ERROR**.
+
+    *\*Valid in this context are the values that are recommended
+    for use in the project. Technically, you can specify any parameter that
+    is valid for the python logging library by default.*
+
+    *The value of this parameter is case-insensitive*
 
 #. Install the necessary dependencies with the help of **poetry** 🔽
 

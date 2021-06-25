@@ -8,7 +8,6 @@ from bulletin_board_bot.errors import PortMustBeNumberError
 
 
 # Edit this
-LOG_LEVEL = logging.INFO
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
 
 
@@ -76,6 +75,12 @@ def get_update_method() -> UpdateMethodType:
                                   webapp_port)
 
 
+def get_log_level():
+    return logging.getLevelName(
+        getenv("LOG_LEVEL", "INFO").upper()
+    )
+
+
 def _compute_update_method(webhook_host: Optional[str],
                            webhook_path: Optional[str],
                            webapp_host: Optional[str],
@@ -109,7 +114,7 @@ def load_config() -> Config:
             parse_mode="HTML"
         ),
         log=LogConfig(
-            level=LOG_LEVEL,
+            level=get_log_level(),
             format=LOG_FORMAT
         )
     )
