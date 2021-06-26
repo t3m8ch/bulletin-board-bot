@@ -15,7 +15,7 @@ pytest = "^6.2.4"
 ipython = "^7.24.1"
 
 [tool.poetry.scripts]
-bot = "bulletin_board_bot.main:run"
+run = "bulletin_board_bot.main:run"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

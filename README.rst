@@ -95,4 +95,5 @@ Technical requirements
 
     ::
 
-        poetry run bot
+        poetry run
+
