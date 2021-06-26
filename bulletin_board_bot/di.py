@@ -42,8 +42,3 @@ class SingletonServiceContainer:
             return self._service
 
         return self._service
-
-
-class DIContainer:
-    def __init__(self):
-        raise NotImplementedError()

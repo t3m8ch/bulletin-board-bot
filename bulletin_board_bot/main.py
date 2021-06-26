@@ -1,10 +1,15 @@
 import asyncio
 import logging
+from typing import Callable
 
 import dotenv
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
+
+from bulletin_board_bot.dependencies import DIContainer
+
+from bulletin_board_bot.services.ad_service import BaseAdService, FakeAdService
 
 from bulletin_board_bot.config import LongPollingUpdateMethod, \
     WebhookUpdateMethod, Config
@@ -52,8 +57,11 @@ def run():
         parse_mode=cfg.tg.parse_mode
     )
     dp = Dispatcher(bot, storage=storage)
+    container = DIContainer(
+        lambda: FakeAdService()
+    )
     user_data = {}
-    setup_middlewares(dp, user_data)
+    setup_middlewares(dp, user_data, container)
 
     # Register
     register_handlers(dp, user_data)
