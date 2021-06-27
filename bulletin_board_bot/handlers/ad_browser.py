@@ -1,5 +1,7 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Command
+from bulletin_board_bot.models import Ad
+
 from bulletin_board_bot.services.ad_service import BaseAdService
 
 from bulletin_board_bot.dependencies import DIContainer
@@ -11,10 +13,10 @@ def register_cmd_browse_ads(dp: Dispatcher):
     dp.register_message_handler(cmd_browse_ads, Command("browseAds"))
 
 
-async def get_message_text(ad_service: BaseAdService):
-    ad = await ad_service.next_ad()
-    text = f"{ad.text}\n\n<b>Дата добавления: " \
-           f"{ad.creation_date.strftime('%d.%m.%y %H:%M')}</b>"
+def get_message_text(ad: Ad):
+    text = f"{ad.id}.\n" \
+           f"{ad.text}\n\n<b>Дата добавления: " \
+           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
     return text
 
 
@@ -22,7 +24,7 @@ async def cmd_browse_ads(message: types.Message, container: DIContainer):
     user_id = message.from_user.id
     ad_service = container.ad_service.get_service(user_id, True)
 
-    text = await get_message_text(ad_service)
+    text = get_message_text(await ad_service.next_ad())
     await message.answer(text, reply_markup=ad_browser_keyboard())
 
 
@@ -37,7 +39,7 @@ async def cq_next_ad_handler(call: types.CallbackQuery,
     user_id = call.from_user.id
     ad_service = container.ad_service.get_service(user_id)
 
-    text = await get_message_text(ad_service)
+    text = get_message_text(await ad_service.next_ad())
     await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
     await call.answer()
 
@@ -53,7 +55,7 @@ async def cq_back_ad_handler(call: types.CallbackQuery,
     user_id = call.from_user.id
     ad_service = container.ad_service.get_service(user_id)
 
-    text = await get_message_text(ad_service)
+    text = get_message_text(await ad_service.back_ad())
     await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
     await call.answer()
 

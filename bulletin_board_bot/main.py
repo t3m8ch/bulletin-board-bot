@@ -6,6 +6,7 @@ import dotenv
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from bulletin_board_bot.dependencies import DIContainer
 
@@ -17,6 +18,7 @@ from bulletin_board_bot.config import LongPollingUpdateMethod, \
 from bulletin_board_bot.handlers import register_handlers
 from bulletin_board_bot import config
 from bulletin_board_bot.middlewares import setup_middlewares
+from bulletin_board_bot.services.alchemy import AlchemyAdService
 
 
 def on_startup(cfg: Config):
@@ -57,9 +59,12 @@ def run():
         parse_mode=cfg.tg.parse_mode
     )
     dp = Dispatcher(bot, storage=storage)
+
+    engine = create_async_engine(cfg.db.connection_str)
     container = DIContainer(
-        lambda: FakeAdService()
+        lambda: AlchemyAdService(engine)
     )
+
     user_data = {}
     setup_middlewares(dp, user_data, container)
 
@@ -72,7 +77,8 @@ def run():
             dispatcher=dp,
             on_startup=on_startup(cfg),
             on_shutdown=on_shutdown,
-            loop=event_loop
+            loop=event_loop,
+            skip_updates=True
         )
 
     elif isinstance(cfg.tg.update_method, WebhookUpdateMethod):
@@ -84,6 +90,7 @@ def run():
             webhook_path=cfg.tg.update_method.webhook_path,
             host=cfg.tg.update_method.webapp_host,
             port=cfg.tg.update_method.webapp_port,
+            skip_updates=True
         )
 
 

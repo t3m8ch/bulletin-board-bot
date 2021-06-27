@@ -48,14 +48,32 @@ Technical requirements
         git clone https://github.com/t3m8ch/bulletin-board-bot.git
         cd bulletin-board-bot
 
-#. Rename **.example.env** to **.env** 🔄
+#. Copy **.example.env** to **.env** 🔄
 
     ::
 
-        mv .example.env .env
+        cp .example.env .env
 
-#. Edit the **.env** file using a text editor 📋
+#. Edit the **.env** file using a text editor ⚙
 
+    **Required parameters**
+    ::
+        TG_TOKEN=Insert_the_telegram_bot_token_here_without_spaces
+        ADMINS_ID=List_the_id_of_the_administrators,separated_by_commas_without_spaces
+
+    To use webhook, you only need to specify the environment variable **WEBHOOK_HOST**.
+    If this parameter is not specified, long polling is used.
+
+    **Default parameter values:**
+    ::
+
+        WEBHOOK_PATH=/bot
+        WEBAPP_HOST=localhost
+        WEBAPP_PORT=3000
+        LOG_LEVEL=info
+        DB_CONNECTION_STR=postgresql+asyncpg://localhost/bulletin_board_board
+
+    **All parameters:**
     ::
 
         TG_TOKEN=Insert_the_telegram_bot_token_here_without_spaces
@@ -65,31 +83,55 @@ Technical requirements
         WEBAPP_HOST=Insert.web.application.host
         WEBAPP_PORT=Insert_web_application_port
         LOG_LEVEL=info
+        DB_CONNECTION_STR=insert://connection:string@to/postgres_here
 
-    To use webhook, you only need to specify the environment variable **WEBHOOK_HOST**.
-    If this parameter is not specified, long polling is used. If you specify only
-    this parameter, it is the default:
+
+    Valid **LOG_LEVEL** values: **DEBUG**, **INFO**, **WARNING**, **ERROR** and other,
+    which are included by default in the python logging library.
+    This value of this parameter is case-insensitive.
+
+    **ADMINS_ID** value is considered valid if they are IDs listed,
+    separated by commas without spaces.
+
+#. Copy **alembic.example.ini** to **alembic.ini** 🔄
 
     ::
 
-        WEBHOOK_PATH=/bot
-        WEBAPP_HOST=localhost
-        WEBAPP_PORT=3000
+        cp alembic.example.ini alembic.ini
 
-    The LOG_LEVEL parameter is also optional. By default it is **INFO**.
-    Valid* values: **DEBUG**, **INFO**, **WARNING**, **ERROR**.
+#. If you changed the default value of **DB_CONNECTION_STR**,
+   change it in **alembic.ini** as well ❗
 
-    *\*Valid in this context are the values that are recommended
-    for use in the project. Technically, you can specify any parameter that
-    is valid for the python logging library by default.*
+    ::
 
-    *The value of this parameter is case-insensitive*
+        sqlalchemy.url = insert://connection:string@to/postgres_here
 
 #. Install the necessary dependencies with the help of **poetry** 🔽
 
     ::
 
         poetry install
+
+#. Create a database in Postgresql 🎩
+
+    ::
+
+        psql -c "create database bulletin_board_board"
+
+    You can change the value of *bulletin_board_board* to any other value
+    you specify in the **.env** and **alembic.ini** files
+
+#. Do the migrations 🐦
+
+    ::
+
+        poetry run alembic upgrade head
+
+#. You can insert test data to the database 📋
+
+    ::
+
+        poetry run insert_test_data
 
 #. Now you can run the bot! 🎉
 

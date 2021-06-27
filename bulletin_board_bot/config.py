@@ -41,9 +41,14 @@ class LogConfig(NamedTuple):
     format: str
 
 
+class DBConfig(NamedTuple):
+    connection_str: str
+
+
 class Config(NamedTuple):
     tg: TgConfig
     log: LogConfig
+    db: DBConfig
 
 
 def get_token() -> str:
@@ -73,6 +78,11 @@ def get_update_method() -> UpdateMethodType:
                                   webhook_path,
                                   webapp_host,
                                   webapp_port)
+
+
+def get_db_connection_str() -> str:
+    return getenv("DB_CONNECTION_STR",
+                  "postgresql+asyncpg://localhost/bulletin_board_bot")
 
 
 def get_log_level():
@@ -116,5 +126,8 @@ def load_config() -> Config:
         log=LogConfig(
             level=get_log_level(),
             format=LOG_FORMAT
+        ),
+        db=DBConfig(
+            connection_str=get_db_connection_str()
         )
     )
