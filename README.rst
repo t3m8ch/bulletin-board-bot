@@ -64,7 +64,7 @@ Technical requirements
     To use webhook, you only need to specify the environment variable **WEBHOOK_HOST**.
     If this parameter is not specified, long polling is used.
 
-    **Default parameter values:**
+    **Default parameters values:**
     ::
 
         WEBHOOK_PATH=/bot
