@@ -14,8 +14,7 @@ def register_cmd_browse_ads(dp: Dispatcher):
 
 
 def get_message_text(ad: Ad):
-    text = f"{ad.id}.\n" \
-           f"{ad.text}\n\n<b>Дата добавления: " \
+    text = f"{ad.text}\n\n<b>Дата добавления: " \
            f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
     return text
 
