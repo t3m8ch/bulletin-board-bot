@@ -56,7 +56,7 @@ Technical requirements
 
 #. Edit the **.env** file using a text editor ⚙
 
-    **Required parameters**
+    **Required parameters:**
     ::
         TG_TOKEN=Insert_the_telegram_bot_token_here_without_spaces
         ADMINS_ID=List_the_id_of_the_administrators,separated_by_commas_without_spaces
