@@ -70,7 +70,7 @@ async def cq_back_ad_handler(call: types.CallbackQuery,
 # -------- Add ad to favourites callback query --------
 def register_cq_add_ad_to_favorites(dp: Dispatcher):
     dp.register_callback_query_handler(cq_add_ad_to_favorites,
-                                       ad_browser_cd.filter(action="favourites"))
+                                       ad_browser_cd.filter(action="favorites"))
 
 
 async def cq_add_ad_to_favorites(call: types.CallbackQuery,
