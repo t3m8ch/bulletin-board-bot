@@ -1,5 +1,3 @@
-import logging
-
 from bulletin_board_bot.models.user import UserModel
 from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncEngine
