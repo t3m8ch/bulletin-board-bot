@@ -1,1 +1,1 @@
-from .ad import Ad
+from .ad import AdModel

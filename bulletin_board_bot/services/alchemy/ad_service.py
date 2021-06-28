@@ -3,7 +3,7 @@ import logging
 from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-from bulletin_board_bot.models import Ad
+from bulletin_board_bot.models import AdModel
 from bulletin_board_bot.services.ad_service import BaseAdService
 from bulletin_board_bot.services.alchemy import AdTable
 
@@ -32,7 +32,7 @@ class AlchemyAdService(BaseAdService):
             )
             return result.fetchall()[0][0]
 
-    async def next_ad(self) -> Ad:
+    async def next_ad(self) -> AdModel:
         # If we have already used all the declarations
         # previously loaded by the SQL query, and we need more
         if self._current_ad_index >= len(self._ads):
@@ -52,9 +52,9 @@ class AlchemyAdService(BaseAdService):
         ad = self._ads[self._current_ad_index]
         self._current_ad_index += 1
 
-        return Ad(ad.id, ad.creation_date, ad.text)
+        return AdModel(ad.id, ad.creation_date, ad.text)
 
-    async def back_ad(self) -> Ad:
+    async def back_ad(self) -> AdModel:
         self._current_ad_index -= 1
 
         # If we are at the beginning of the list of uploaded ads
@@ -72,7 +72,7 @@ class AlchemyAdService(BaseAdService):
             await self._load_page(at_end=True)
 
         ad = self._ads[self._current_ad_index - 1]
-        return Ad(ad.id, ad.creation_date, ad.text)
+        return AdModel(ad.id, ad.creation_date, ad.text)
 
     async def _load_page(self, *, at_end=False):
         logging.debug("-----------------------Loading next page-----------------------")

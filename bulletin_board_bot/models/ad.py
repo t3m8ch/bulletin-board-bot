@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @dataclass
-class Ad:
+class AdModel:
     id: int
     creation_date: datetime
     text: str

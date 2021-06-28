@@ -1,6 +1,6 @@
 import logging
 
-from bulletin_board_bot.models.user import User
+from bulletin_board_bot.models.user import UserModel
 from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncEngine
 
@@ -12,7 +12,7 @@ class AlchemyUserService(BaseUserService):
     def __init__(self, engine: AsyncEngine):
         self._engine = engine
 
-    async def register_user(self, telegram_id: int) -> User:
+    async def register_user(self, telegram_id: int) -> UserModel:
         async with self._engine.connect() as conn:
             user = await conn.execute(
                 insert(UserTable)
@@ -26,7 +26,7 @@ class AlchemyUserService(BaseUserService):
             await conn.commit()
             user = user.fetchall()[0]
 
-            return User(
+            return UserModel(
                 id=user.id,
                 creation_date=user.creation_date,
                 telegram_id=user.telegram_id

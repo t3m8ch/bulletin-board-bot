@@ -1,6 +1,6 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Command
-from bulletin_board_bot.models import Ad
+from bulletin_board_bot.models import AdModel
 
 from bulletin_board_bot.dependencies import DIContainer
 
@@ -90,7 +90,7 @@ async def cq_add_ad_to_favorites(call: types.CallbackQuery,
 
 
 # -------- Common --------
-def get_message_text(ad: Ad):
+def get_message_text(ad: AdModel):
     text = f"{ad.text}\n\n<b>Дата добавления: " \
            f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
     return text
