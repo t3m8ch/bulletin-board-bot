@@ -92,7 +92,7 @@ async def cq_add_ad_to_favorites(call: types.CallbackQuery,
 # -------- Common --------
 def get_message_text(ad: Ad):
     text = f"{ad.text}\n\n<b>Дата добавления: " \
-           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')} {ad.id}</b>"
+           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
     return text
 
 
