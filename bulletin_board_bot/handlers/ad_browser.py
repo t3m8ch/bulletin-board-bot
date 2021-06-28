@@ -12,11 +12,16 @@ def register_cmd_browse_ads(dp: Dispatcher):
     dp.register_message_handler(cmd_browse_ads, Command("browseAds"))
 
 
-async def cmd_browse_ads(message: types.Message, container: DIContainer):
+async def cmd_browse_ads(message: types.Message, 
+                         user_data: dict,
+                         container: DIContainer):
     user_id = message.from_user.id
     ad_service = container.ad_service.get_service(user_id, True)
-
-    text = get_message_text(await ad_service.next_ad())
+    
+    ad = await ad_service.next_ad()
+    user_data["current_ad"] = ad
+    
+    text = get_message_text(ad)
     await message.answer(text, reply_markup=ad_browser_keyboard())
 
 
@@ -28,11 +33,15 @@ def register_cq_next_ad_handler(dp: Dispatcher):
 
 async def cq_next_ad_handler(call: types.CallbackQuery,
                              callback_data: dict,
+                             user_data: dict,
                              container: DIContainer):
     user_id = call.from_user.id
     ad_service = container.ad_service.get_service(user_id)
 
-    text = get_message_text(await ad_service.next_ad())
+    ad = await ad_service.next_ad()
+    user_data["current_ad"] = ad
+
+    text = get_message_text(ad)
     await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
     await call.answer()
 
@@ -45,19 +54,45 @@ def register_cq_back_ad_handler(dp: Dispatcher):
 
 async def cq_back_ad_handler(call: types.CallbackQuery,
                              callback_data: dict,
+                             user_data: dict,
                              container: DIContainer):
     user_id = call.from_user.id
     ad_service = container.ad_service.get_service(user_id)
 
-    text = get_message_text(await ad_service.back_ad())
+    ad = await ad_service.back_ad()
+    user_data["current_ad"] = ad
+
+    text = get_message_text(ad)
     await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
     await call.answer()
+
+
+# -------- Add ad to favourites callback query --------
+def register_cq_add_ad_to_favorites(dp: Dispatcher):
+    dp.register_callback_query_handler(cq_add_ad_to_favorites,
+                                       ad_browser_cd.filter(action="favourites"))
+
+
+async def cq_add_ad_to_favorites(call: types.CallbackQuery,
+                                 callback_data: dict,
+                                 user_data: dict,
+                                 container: DIContainer):
+    user_id = call.from_user.id
+    user_service = container.user_service.get_service()
+
+    ad_id = user_data["current_ad"].id
+    await user_service.add_ad_to_favorites(ad_id, user_id)
+
+    await call.answer(
+        text="Объявление успешно добавлено в избранное!",
+        show_alert=True
+    )
 
 
 # -------- Common --------
 def get_message_text(ad: Ad):
     text = f"{ad.text}\n\n<b>Дата добавления: " \
-           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
+           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')} {ad.id}</b>"
     return text
 
 
@@ -65,4 +100,5 @@ handlers = [
     register_cmd_browse_ads,
     register_cq_next_ad_handler,
     register_cq_back_ad_handler,
+    register_cq_add_ad_to_favorites,
 ]

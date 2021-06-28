@@ -78,7 +78,9 @@ class AlchemyAdService(BaseAdService):
         logging.debug("-----------------------Loading next page-----------------------")
         async with self._engine.connect() as conn:
             ads = await conn.execute(
-                select(AdTable).order_by(desc(AdTable.creation_date)).slice(
+                select(AdTable.id, AdTable.creation_date, AdTable.text)
+                .order_by(desc(AdTable.creation_date))
+                .slice(
                     self._current_page * self._page_size,
                     self._current_page * self._page_size + self._page_size
                 )

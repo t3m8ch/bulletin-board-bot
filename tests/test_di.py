@@ -5,6 +5,7 @@ from bulletin_board_bot.services.base_service import BaseService
 from bulletin_board_bot.di import UserSpecificServiceContainer, SingletonServiceContainer
 
 
+# TODO: Fix this
 class FakeService(BaseService, NamedTuple):
     something: str
 
