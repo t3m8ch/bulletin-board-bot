@@ -9,7 +9,7 @@ def ad_browser_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[
         [
             InlineKeyboardButton(
-                text="В избранное",
+                text="В избранное ★",
                 callback_data=ad_browser_cd.new(action="favorites")
             ),
         ],
