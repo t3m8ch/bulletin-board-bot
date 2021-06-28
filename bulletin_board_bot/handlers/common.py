@@ -11,16 +11,17 @@ async def cmd_start(message: types.Message):
     await message.reply("Hello!")
 
 
-# -------- echo --------
-def register_echo(dp: Dispatcher):
-    dp.register_message_handler(echo)
+# -------- Command not found! --------
+def register_cmd_not_found(dp: Dispatcher):
+    dp.register_message_handler(cmd_not_found)
 
 
-async def echo(message: types.Message):
-    await message.reply(message.text)
+async def cmd_not_found(message: types.Message):
+    await message.reply("Такой команды не существует\n"
+                        "Список всех команд: /help")
 
 
 handlers = [
     register_cmd_start,
-    register_echo
+    register_cmd_not_found
 ]
