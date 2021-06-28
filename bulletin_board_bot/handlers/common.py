@@ -8,7 +8,11 @@ def register_cmd_start(dp: Dispatcher):
 
 
 async def cmd_start(message: types.Message):
-    await message.reply("Hello!")
+    text = "Привет! Это доска объявлений. Здесь ты сможешь опубликовать своё объявление, " \
+           "которое увидят сотни пользователей.\n\n" \
+           "Используй команду /newAd. Если ты хочешь посмотреть чужие объявления, выполни /browseAds.\n\n" \
+           "Чтобы посмотреть все команды, пиши /help."
+    await message.reply(text)
 
 
 # -------- Command not found! --------
