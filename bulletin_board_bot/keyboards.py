@@ -17,7 +17,7 @@ def ad_browser_keyboard() -> InlineKeyboardMarkup:
                 callback_data=ad_browser_cd.new(action="favourites")
             ),
             InlineKeyboardButton(
-                text="Следущее 🠖",
+                text="Следующее 🠖",
                 callback_data=ad_browser_cd.new(action="next")
             ),
         ],
