@@ -2,8 +2,6 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Command
 from bulletin_board_bot.models import Ad
 
-from bulletin_board_bot.services.ad_service import BaseAdService
-
 from bulletin_board_bot.dependencies import DIContainer
 
 from bulletin_board_bot.keyboards import ad_browser_keyboard, ad_browser_cd

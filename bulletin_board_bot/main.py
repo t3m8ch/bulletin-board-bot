@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from typing import Callable
 
 import dotenv
 from aiogram import Bot, Dispatcher
@@ -9,8 +8,6 @@ from aiogram.utils import executor
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from bulletin_board_bot.dependencies import DIContainer
-
-from bulletin_board_bot.services.ad_service import BaseAdService, FakeAdService
 
 from bulletin_board_bot.config import LongPollingUpdateMethod, \
     WebhookUpdateMethod, Config
