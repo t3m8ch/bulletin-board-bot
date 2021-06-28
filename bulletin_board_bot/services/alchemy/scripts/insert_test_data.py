@@ -4,7 +4,7 @@ from time import sleep
 
 import dotenv
 from sqlalchemy import insert
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from bulletin_board_bot.config import load_config
 from bulletin_board_bot.services.alchemy import AdTable
