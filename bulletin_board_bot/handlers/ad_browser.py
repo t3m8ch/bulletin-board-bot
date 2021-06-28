@@ -7,6 +7,7 @@ from bulletin_board_bot.dependencies import DIContainer
 from bulletin_board_bot.keyboards import ad_browser_keyboard, ad_browser_cd
 
 
+# -------- /browseAds --------
 def register_cmd_browse_ads(dp: Dispatcher):
     dp.register_message_handler(cmd_browse_ads, Command("browseAds"))
 
@@ -19,6 +20,7 @@ async def cmd_browse_ads(message: types.Message, container: DIContainer):
     await message.answer(text, reply_markup=ad_browser_keyboard())
 
 
+# -------- Next ad callback query --------
 def register_cq_next_ad_handler(dp: Dispatcher):
     dp.register_callback_query_handler(cq_next_ad_handler,
                                        ad_browser_cd.filter(action="next"))
@@ -35,6 +37,7 @@ async def cq_next_ad_handler(call: types.CallbackQuery,
     await call.answer()
 
 
+# -------- Back ad callback query --------
 def register_cq_back_ad_handler(dp: Dispatcher):
     dp.register_callback_query_handler(cq_back_ad_handler,
                                        ad_browser_cd.filter(action="back"))
@@ -51,6 +54,7 @@ async def cq_back_ad_handler(call: types.CallbackQuery,
     await call.answer()
 
 
+# -------- Common --------
 def get_message_text(ad: Ad):
     text = f"{ad.text}\n\n<b>Дата добавления: " \
            f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
