@@ -11,12 +11,6 @@ def register_cmd_browse_ads(dp: Dispatcher):
     dp.register_message_handler(cmd_browse_ads, Command("browseAds"))
 
 
-def get_message_text(ad: Ad):
-    text = f"{ad.text}\n\n<b>Дата добавления: " \
-           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
-    return text
-
-
 async def cmd_browse_ads(message: types.Message, container: DIContainer):
     user_id = message.from_user.id
     ad_service = container.ad_service.get_service(user_id, True)
@@ -55,6 +49,12 @@ async def cq_back_ad_handler(call: types.CallbackQuery,
     text = get_message_text(await ad_service.back_ad())
     await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
     await call.answer()
+
+
+def get_message_text(ad: Ad):
+    text = f"{ad.text}\n\n<b>Дата добавления: " \
+           f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
+    return text
 
 
 handlers = [
