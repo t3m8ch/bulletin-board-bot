@@ -1,4 +1,4 @@
-from bulletin_board_bot.user_data import UserDataStorage
+from bulletin_board_bot.misc.user_data import UserDataStorage
 
 
 def test_user_data_if_user_is_not_found():

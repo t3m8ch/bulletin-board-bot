@@ -2,7 +2,7 @@ from typing import NamedTuple
 
 from bulletin_board_bot.services.base_service import BaseService
 
-from bulletin_board_bot.di import UserSpecificServiceContainer, SingletonServiceContainer
+from bulletin_board_bot.misc.di import UserSpecificServiceContainer, SingletonServiceContainer
 
 
 # TODO: Fix this

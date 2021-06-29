@@ -1,5 +1,5 @@
 from aiogram import Dispatcher
-from bulletin_board_bot.user_data import UserDataStorage
+from bulletin_board_bot.misc.user_data import UserDataStorage
 
 from bulletin_board_bot.dependencies import DIContainer
 from bulletin_board_bot.middlewares.di import DIContainerMiddleware

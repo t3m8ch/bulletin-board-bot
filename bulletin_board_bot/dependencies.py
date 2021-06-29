@@ -2,7 +2,7 @@ from typing import Callable
 
 from bulletin_board_bot.services.ad_service import BaseAdService
 from bulletin_board_bot.services.user_service import BaseUserService
-from bulletin_board_bot.di import UserSpecificServiceContainer, SingletonServiceContainer
+from bulletin_board_bot.misc.di import UserSpecificServiceContainer, SingletonServiceContainer
 
 
 class DIContainer:

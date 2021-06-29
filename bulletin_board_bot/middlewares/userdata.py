@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.middlewares import BaseMiddleware
-from bulletin_board_bot.user_data import UserDataStorage
+from bulletin_board_bot.misc.user_data import UserDataStorage
 
 
 class UserDataMiddleware(BaseMiddleware):

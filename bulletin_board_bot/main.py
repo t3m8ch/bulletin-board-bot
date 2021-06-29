@@ -5,7 +5,7 @@ import dotenv
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
-from bulletin_board_bot.user_data import UserDataStorage
+from bulletin_board_bot.misc.user_data import UserDataStorage
 
 from bulletin_board_bot.services.alchemy.user_service import AlchemyUserService
 from sqlalchemy.ext.asyncio import create_async_engine

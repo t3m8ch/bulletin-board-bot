@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Command
-from bulletin_board_bot.router import Router
+from bulletin_board_bot.misc.router import Router
 
 from bulletin_board_bot.models import AdModel
 
