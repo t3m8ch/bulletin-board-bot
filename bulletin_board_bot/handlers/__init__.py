@@ -8,19 +8,20 @@ def register_handlers(dp: Dispatcher):
     Example of registration of several handlers:
     .. code-block:: python
 
-       handlers =
-           module1.handlers + \
-           module2.handlers + \
-           module3.handlers
+       router = [
+            module1.router,
+            module2.router,
+       ]
 
-    Each handler module must contain a list of 'handlers',
+    Each handler module must contain a Router object,
     which stores the functions that register the handler.
 
-    Remember that the order of handlers is important!
+    Remember that the order of routers is important!
     """
-    handlers = \
-        ad_browser.handlers + \
-        common.handlers
+    routers = [
+        ad_browser.router,
+        common.router,
+    ]
 
-    for handler in handlers:
-        handler(dp)
+    for router in routers:
+        router.register_handlers(dp)

@@ -1,12 +1,12 @@
-from aiogram import types, Dispatcher
+from aiogram import types
 from aiogram.dispatcher.filters import CommandStart
+from bulletin_board_bot.router import Router
+
+router = Router()
 
 
 # -------- /start --------
-def register_cmd_start(dp: Dispatcher):
-    dp.register_message_handler(cmd_start, CommandStart())
-
-
+@router.message(CommandStart())
 async def cmd_start(message: types.Message):
     text = "Привет! Это доска объявлений. Здесь ты сможешь опубликовать своё объявление, " \
            "которое увидят сотни пользователей.\n\n" \
@@ -16,16 +16,7 @@ async def cmd_start(message: types.Message):
 
 
 # -------- Command not found! --------
-def register_cmd_not_found(dp: Dispatcher):
-    dp.register_message_handler(cmd_not_found)
-
-
+@router.message()
 async def cmd_not_found(message: types.Message):
     await message.reply("Такой команды не существует\n"
                         "Список всех команд: /help")
-
-
-handlers = [
-    register_cmd_start,
-    register_cmd_not_found
-]
