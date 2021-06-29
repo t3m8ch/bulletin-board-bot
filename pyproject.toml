@@ -12,6 +12,7 @@ urlpath = "^1.1.7"
 SQLAlchemy = "^1.4.19"
 asyncpg = "^0.23.0"
 alembic = "^1.6.5"
+pydantic = "^1.8.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

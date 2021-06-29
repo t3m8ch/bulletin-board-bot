@@ -2,11 +2,10 @@ import asyncio
 import random
 from time import sleep
 
-import dotenv
 from sqlalchemy import insert
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from bulletin_board_bot.config import load_config
+from bulletin_board_bot.config import cfg
 from bulletin_board_bot.services.alchemy import AdTable
 
 text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. " \
@@ -52,9 +51,7 @@ async def insert_test_data_async(connection_str: str):
 
 
 def insert_test_data():
-    dotenv.load_dotenv()
-    connection_str = load_config().db.connection_str
-    asyncio.run(insert_test_data_async(connection_str))
+    asyncio.run(insert_test_data_async(cfg.db_connection_str))
 
 
 if __name__ == "__main__":
