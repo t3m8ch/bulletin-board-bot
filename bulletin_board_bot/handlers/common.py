@@ -20,8 +20,3 @@ async def cmd_start(message: types.Message):
 async def cmd_not_found(message: types.Message):
     await message.reply("Такой команды не существует\n"
                         "Список всех команд: /help")
-
-
-handlers = [
-    router.register_handlers
-]

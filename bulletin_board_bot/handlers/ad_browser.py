@@ -83,8 +83,3 @@ def get_message_text(ad: AdModel):
     text = f"{ad.text}\n\n<b>Дата добавления: " \
            f"{ad.creation_date.strftime('%d.%m.%y %H:%M:%S')}</b>"
     return text
-
-
-handlers = [
-    router.register_handlers
-]
