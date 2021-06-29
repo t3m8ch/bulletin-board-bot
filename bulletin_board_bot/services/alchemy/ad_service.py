@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 
 from bulletin_board_bot.models import AdModel
 from bulletin_board_bot.services.ad_service import BaseAdService
-from bulletin_board_bot.services.alchemy import AdTable
+from bulletin_board_bot.services.alchemy import AdTable, FavoriteTable, UserTable
 
 
 class AlchemyAdService(BaseAdService):
@@ -23,6 +23,9 @@ class AlchemyAdService(BaseAdService):
 
         # How many ads we will take per SQL query
         self._page_size = 10
+
+        # UserSpecificServiceContainer sets the value of this attribute when the handler receives the object
+        self.user_tg_id = None
 
     # TODO: Add this method to the base class
     async def number_of_ads(self) -> int:
@@ -52,7 +55,7 @@ class AlchemyAdService(BaseAdService):
         ad = self._ads[self._current_ad_index]
         self._current_ad_index += 1
 
-        return AdModel(ad.id, ad.creation_date, ad.text)
+        return ad
 
     async def back_ad(self) -> AdModel:
         self._current_ad_index -= 1
@@ -71,19 +74,29 @@ class AlchemyAdService(BaseAdService):
 
             await self._load_page(at_end=True)
 
-        ad = self._ads[self._current_ad_index - 1]
-        return AdModel(ad.id, ad.creation_date, ad.text)
+        return self._ads[self._current_ad_index - 1]
 
     async def _load_page(self, *, at_end=False):
         logging.debug("-----------------------Loading next page-----------------------")
         async with self._engine.connect() as conn:
             ads = await conn.execute(
-                select(AdTable)
+                select(
+                    AdTable,
+                    select(func.count() >= 1)
+                    .where(FavoriteTable.ad_id == AdTable.id)
+                    .where(FavoriteTable.user_id ==
+                           select(UserTable.id)
+                           .where(UserTable.telegram_id == self.user_tg_id))
+                    .label("in_favorites")
+                )
                 .order_by(desc(AdTable.creation_date))
                 .slice(
                     self._current_page * self._page_size,
                     self._current_page * self._page_size + self._page_size
                 )
             )
-            self._ads = list(ads)
+            self._ads = list(
+                AdModel(ad.id, ad.creation_date, ad.text, ad.in_favorites)
+                for ad in ads
+            )
             self._current_ad_index = len(self._ads) if at_end else 0

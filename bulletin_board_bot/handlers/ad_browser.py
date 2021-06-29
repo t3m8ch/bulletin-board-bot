@@ -23,7 +23,7 @@ async def cmd_browse_ads(message: types.Message,
     user_data["current_ad"] = ad
     
     text = get_message_text(ad)
-    await message.answer(text, reply_markup=ad_browser_keyboard())
+    await message.answer(text, reply_markup=ad_browser_keyboard(ad.in_favorites))
 
 
 # -------- Next ad callback query --------
@@ -39,7 +39,7 @@ async def cq_next_ad_handler(call: types.CallbackQuery,
     user_data["current_ad"] = ad
 
     text = get_message_text(ad)
-    await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
+    await call.message.edit_text(text, reply_markup=ad_browser_keyboard(ad.in_favorites))
     await call.answer()
 
 
@@ -56,26 +56,35 @@ async def cq_back_ad_handler(call: types.CallbackQuery,
     user_data["current_ad"] = ad
 
     text = get_message_text(ad)
-    await call.message.edit_text(text, reply_markup=ad_browser_keyboard())
+    await call.message.edit_text(text, reply_markup=ad_browser_keyboard(ad.in_favorites))
     await call.answer()
 
 
-# -------- Add ad to favourites callback query --------
+# -------- Add or remove ad in favorites callback query --------
 @router.callback_query(ad_browser_cd.filter(action="favorites"))
-async def cq_add_ad_to_favorites(call: types.CallbackQuery,
-                                 callback_data: dict,
-                                 user_data: dict,
-                                 container: DIContainer):
+async def cq_toggle_favorite(call: types.CallbackQuery,
+                             callback_data: dict,
+                             user_data: dict,
+                             container: DIContainer):
     user_id = call.from_user.id
     user_service = container.user_service.get_service()
 
-    ad_id = user_data["current_ad"].id
-    await user_service.add_ad_to_favorites(ad_id, user_id)
+    ad = user_data["current_ad"]
+    if ad.in_favorites:
+        await user_service.remove_ad_from_favorites(ad, user_id)
+        await call.answer(
+            text="Объявление успешно удалено из избранных!",
+            show_alert=True
+        )
+    else:
+        await user_service.add_ad_to_favorites(ad, user_id)
+        await call.answer(
+            text="Объявление успешно добавлено в избранное!",
+            show_alert=True
+        )
 
-    await call.answer(
-        text="Объявление успешно добавлено в избранное!",
-        show_alert=True
-    )
+    text = call.message.text
+    await call.message.edit_text(text, reply_markup=ad_browser_keyboard(ad.in_favorites))
 
 
 # -------- Common --------

@@ -18,7 +18,10 @@ class UserSpecificServiceContainer:
     def get_service(self, user_id: int, necessary_new=False):
         if self._services.get(user_id) is None or necessary_new:
             service = self._create_service()
+            setattr(service, "user_tg_id", user_id)
+
             self._services[user_id] = service
+
             return service
 
         return self._services[user_id]

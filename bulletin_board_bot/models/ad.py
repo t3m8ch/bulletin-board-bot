@@ -7,3 +7,4 @@ class AdModel:
     id: int
     creation_date: datetime
     text: str
+    in_favorites: bool
