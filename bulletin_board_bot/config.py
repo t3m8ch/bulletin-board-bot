@@ -39,7 +39,7 @@ class Config(BaseSettings):
     db_connection_str: str = "postgresql+asyncpg://localhost/bulletin_board_bot"
 
     @property
-    def update_method(self) -> UpdateMethod:
+    def tg_update_method(self) -> UpdateMethod:
         return UpdateMethod.LONG_POLLING if not self.tg_webhook_host else UpdateMethod.WEBHOOKS
 
     @property
@@ -47,7 +47,7 @@ class Config(BaseSettings):
         return str(URL(self.tg_webhook_host, self.tg_webhook_path))
 
     @property
-    def parse_mode(self) -> str:
+    def tg_parse_mode(self) -> str:
         # PARSE_MODE must be specified in the code, because the way
         # the message is parsed directly affects the code
         return PARSE_MODE

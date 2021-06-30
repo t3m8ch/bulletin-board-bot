@@ -19,7 +19,7 @@ from bulletin_board_bot.services.alchemy import AlchemyAdService
 
 
 async def on_startup(dp: Dispatcher):
-    if cfg.update_method == UpdateMethod.WEBHOOKS:
+    if cfg.tg_update_method == UpdateMethod.WEBHOOKS:
         await dp.bot.set_webhook(cfg.tg_webhook_url)
 
     logging.warning("START BOT!")
@@ -46,7 +46,7 @@ def run():
     storage = MemoryStorage()  # TODO: Redis
     bot = Bot(
         token=cfg.tg_token,
-        parse_mode=cfg.parse_mode
+        parse_mode=cfg.tg_parse_mode
     )
     dp = Dispatcher(bot, storage=storage)
 
@@ -63,7 +63,7 @@ def run():
     register_handlers(dp)
 
     # Start bot!
-    if cfg.update_method == UpdateMethod.LONG_POLLING:
+    if cfg.tg_update_method == UpdateMethod.LONG_POLLING:
         executor.start_polling(
             dispatcher=dp,
             on_startup=on_startup,
@@ -72,7 +72,7 @@ def run():
             skip_updates=True
         )
 
-    elif cfg.update_method == UpdateMethod.WEBHOOKS:
+    elif cfg.tg_update_method == UpdateMethod.WEBHOOKS:
         executor.start_webhook(
             dispatcher=dp,
             on_startup=on_startup,
