@@ -39,10 +39,7 @@ class Config(BaseSettings):
 
     @property
     def update_method(self) -> UpdateMethod:
-        if self.webhook_host is None:
-            return UpdateMethod.LONG_POLLING
-        else:
-            return UpdateMethod.WEBHOOKS
+        return UpdateMethod.LONG_POLLING if not self.webhook_host else UpdateMethod.WEBHOOKS
 
     @property
     def webhook_url(self) -> str:
