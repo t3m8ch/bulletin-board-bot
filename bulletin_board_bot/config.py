@@ -26,9 +26,10 @@ class LogLevel(int, Enum):
 
 class Config(BaseSettings):
     tg_token: str
-    admins_id: str
-    webhook_host: Optional[str]
-    webhook_path: str = "/bot"
+    tg_admins_id: str
+    tg_webhook_host: Optional[str]
+    tg_webhook_path: str = "/bot"
+
     webapp_host: str = "localhost"
     webapp_port: int = 3000
 
@@ -39,11 +40,11 @@ class Config(BaseSettings):
 
     @property
     def update_method(self) -> UpdateMethod:
-        return UpdateMethod.LONG_POLLING if not self.webhook_host else UpdateMethod.WEBHOOKS
+        return UpdateMethod.LONG_POLLING if not self.tg_webhook_host else UpdateMethod.WEBHOOKS
 
     @property
-    def webhook_url(self) -> str:
-        return str(URL(self.webhook_host, self.webhook_path))
+    def tg_webhook_url(self) -> str:
+        return str(URL(self.tg_webhook_host, self.tg_webhook_path))
 
     @property
     def parse_mode(self) -> str:

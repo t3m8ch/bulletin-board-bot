@@ -20,7 +20,7 @@ from bulletin_board_bot.services.alchemy import AlchemyAdService
 
 async def on_startup(dp: Dispatcher):
     if cfg.update_method == UpdateMethod.WEBHOOKS:
-        await dp.bot.set_webhook(cfg.webhook_url)
+        await dp.bot.set_webhook(cfg.tg_webhook_url)
 
     logging.warning("START BOT!")
 
@@ -78,7 +78,7 @@ def run():
             on_startup=on_startup,
             on_shutdown=on_shutdown,
             loop=event_loop,
-            webhook_path=cfg.webhook_path,
+            webhook_path=cfg.tg_webhook_path,
             host=cfg.webapp_host,
             port=cfg.webapp_port,
             skip_updates=True
